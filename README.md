@@ -11,3 +11,6 @@ crystal run src/example.cr
 ```
 
 log is here from my Mac: [stdout](log.txt) and [stderr](log.err)
+
+code is here: [example.cr](src/example.cr)
+
