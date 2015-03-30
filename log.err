@@ -1,0 +1,217 @@
+; ModuleID = 'Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))'
+
+%String = type { i32, i32, i32, i8 }
+%"Array(Int32)" = type { i32, i32, i32, i32* }
+%"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))" = type { i32, i32, %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"**, i32, i32, i1, %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"*, %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* }
+%"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))" = type { i32, %"(Int:Class | Float:Class)", %"(Example::Integer:Class | Example::Float:Class)", %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"*, %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"*, %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* }
+%"(Int:Class | Float:Class)" = type { i32, [1 x i64] }
+%"(Example::Integer:Class | Example::Float:Class)" = type { i32, [1 x i64] }
+
+@symbol_table = external global [1 x %String*]
+@"Hash(K, V)::HASH_PRIMES" = external global %"Array(Int32)"*
+@str = private constant { i32, i32, i32, [19 x i8] } { i32 1, i32 18, i32 18, [19 x i8] c"Hash table too big\00" }
+
+define %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* @"*Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))::new<Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class)):Class>:Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"(i32 %self) {
+alloca:
+  %block = alloca i1
+  %comp = alloca i32
+  %_ = alloca %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"*
+  br label %entry
+
+entry:                                            ; preds = %alloca
+  store i1 false, i1* %block
+  store i32 310, i32* %comp
+  %0 = call i8* @__crystal_malloc(i32 ptrtoint (%"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* getelementptr (%"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* null, i32 1) to i32))
+  %1 = bitcast i8* %0 to %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"*
+  %2 = bitcast %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %1 to i8*
+  call void @llvm.memset.p0i8.i32(i8* %2, i8 0, i32 ptrtoint (%"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* getelementptr (%"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* null, i32 1) to i32), i32 4, i1 false)
+  %3 = getelementptr inbounds %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %1, i32 0, i32 0
+  store i32 37, i32* %3
+  store %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %1, %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** %_
+  %4 = load %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** %_
+  %5 = call i1 @"*GC::add_finalizer<Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))>:Nil"(%"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %4)
+  %6 = load %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** %_
+  %7 = load i1* %block
+  %8 = load i32* %comp
+  %9 = call i1 @"*Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))@Hash(K, V)#initialize<Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class)), Nil, Hash(K, V)::StandardComparator:Class>:Nil"(%"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %6, i1 %7, i32 %8)
+  %10 = load %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** %_
+  ret %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %10
+}
+
+declare i8* @__crystal_malloc(i32)
+
+; Function Attrs: nounwind
+declare void @llvm.memset.p0i8.i32(i8* nocapture, i8, i32, i32, i1) #0
+
+declare i1 @"*GC::add_finalizer<Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))>:Nil"(%"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"*)
+
+define i1 @"*Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))@Hash(K, V)#initialize<Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class)), Nil, Hash(K, V)::StandardComparator:Class>:Nil"(%"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i1 %block, i32 %comp) {
+entry:
+  %0 = getelementptr inbounds %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 0, i32 1
+  store i32 %comp, i32* %0
+  %1 = call %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** @"*Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?)::malloc<Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?):Class, Int32>:Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?)"(i32 258, i32 11)
+  %2 = getelementptr inbounds %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 0, i32 2
+  store %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** %1, %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"*** %2
+  %3 = getelementptr inbounds %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 0, i32 3
+  store i32 11, i32* %3
+  %4 = getelementptr inbounds %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 0, i32 4
+  store i32 0, i32* %4
+  %5 = getelementptr inbounds %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 0, i32 5
+  store i1 %block, i1* %5
+  ret i1 %block
+}
+
+declare %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** @"*Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?)::malloc<Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?):Class, Int32>:Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?)"(i32, i32)
+
+define i32 @"*Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))@Hash(K, V)#[]=<Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class)), Int:Class, Example::Integer:Class>:Example::Integer:Class"(%"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 %key, i32 %value) {
+alloca:
+  %index = alloca i32
+  %entry1 = alloca %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"*
+  %last = alloca %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"*
+
+entry:                                            ; No predecessors!
+  %0 = getelementptr inbounds %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 0, i32 4
+  %1 = load i32* %0
+  %2 = getelementptr inbounds %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 0, i32 3
+  %3 = load i32* %2
+  %4 = mul i32 5, %3
+  %5 = icmp sgt i32 %1, %4
+  br i1 %5, label %then, label %else
+
+then:                                             ; preds = %entry
+
+else:                                             ; preds = %entry
+}
+
+define i1 @"*Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))@Hash(K, V)#rehash<Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))>:Nil"(%"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self) {
+alloca:
+  %new_size = alloca i32
+  %entry1 = alloca %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"*
+  %index = alloca i32
+  %i = alloca i32
+  %i2 = alloca i32
+  %0 = alloca %"(Int:Class | Float:Class)"
+
+entry:                                            ; No predecessors!
+  %1 = getelementptr inbounds %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 0, i32 4
+  %2 = load i32* %1
+  %3 = call i32 @"*Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))@Hash(K, V)#calculate_new_size<Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class)), Int32>:Int32"(%"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 %2)
+  store i32 %3, i32* %new_size
+  %4 = getelementptr inbounds %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 0, i32 2
+  %5 = load %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"*** %4
+  %6 = load i32* %new_size
+  %7 = call %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** @"*Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?)@Pointer(T)#realloc<Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?), Int32>:Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?)"(%"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** %5, i32 %6)
+  %8 = getelementptr inbounds %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 0, i32 2
+  store %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** %7, %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"*** %8
+  %9 = load i32* %new_size
+  %10 = xor i32 %9, %9
+  store i32 %10, i32* %i2
+  br label %while
+
+while:                                            ; preds = %body, %entry
+  %11 = load i32* %i2
+  %12 = icmp slt i32 %11, %9
+  br i1 %12, label %body, label %exit
+
+body:                                             ; preds = %while
+  %13 = load i32* %i2
+  store i32 %13, i32* %i
+  %14 = getelementptr inbounds %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 0, i32 2
+  %15 = load %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"*** %14
+  %16 = load i32* %i
+  %17 = call i1 @"*Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?)@Pointer(T)#[]=<Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?), Int32, Nil>:Nil"(%"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** %15, i32 %16, i1 false)
+  %18 = load i32* %i2
+  %19 = add i32 %18, 1
+  store i32 %19, i32* %i2
+  br label %while
+
+exit:                                             ; preds = %while
+  %20 = load i32* %new_size
+  %21 = getelementptr inbounds %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 0, i32 3
+  store i32 %20, i32* %21
+  %22 = getelementptr inbounds %"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 0, i32 6
+  %23 = load %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** %22
+  store %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %23, %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** %entry1
+  br label %while3
+
+while3:                                           ; preds = %exit
+  %24 = load %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** %entry1
+  %25 = ptrtoint %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %24 to i32
+  %26 = icmp ne i32 %25, 0
+  br i1 %26, label %body4, label %exit5
+
+body4:                                            ; preds = %while3
+  %27 = load %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** %entry1
+  %28 = call i1 @"*Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))@Hash(K, V)::Entry(K, V)#next=<Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class)), Nil>:Nil"(%"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %27, i1 false)
+  %29 = load %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** %entry1
+  %30 = call %"(Int:Class | Float:Class)" @"*Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))@Hash(K, V)::Entry(K, V)#key<Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))>:(Int:Class | Float:Class)"(%"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %29)
+  store %"(Int:Class | Float:Class)" %30, %"(Int:Class | Float:Class)"* %0
+
+exit5:                                            ; preds = %while3
+}
+
+define i32 @"*Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))@Hash(K, V)#calculate_new_size<Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class)), Int32>:Int32"(%"Hash((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"* %self, i32 %size) {
+alloca:
+  %new_size = alloca i32
+  %hash_size = alloca i32
+  %i = alloca i32
+  %i1 = alloca i32
+  br label %entry
+
+entry:                                            ; preds = %alloca
+  store i32 8, i32* %new_size
+  %0 = load %"Array(Int32)"** @"Hash(K, V)::HASH_PRIMES"
+  store i32 0, i32* %i1
+  br label %while
+
+while:                                            ; preds = %else, %entry
+  %1 = load i32* %i1
+  %2 = call i32 @"*Array(Int32)@Array(T)#length<Array(Int32)>:Int32"(%"Array(Int32)"* %0)
+  %3 = icmp slt i32 %1, %2
+  br i1 %3, label %body, label %exit
+
+body:                                             ; preds = %while
+  %4 = load i32* %i1
+  store i32 %4, i32* %i
+  %5 = getelementptr inbounds %"Array(Int32)"* %0, i32 0, i32 3
+  %6 = load i32** %5
+  %7 = load i32* %i
+  %8 = call i32 @"*Pointer(Int32)@Pointer(T)#[]<Pointer(Int32), Int32>:Int32"(i32* %6, i32 %7)
+  store i32 %8, i32* %hash_size
+  %9 = load i32* %new_size
+  %10 = icmp sgt i32 %9, %size
+  br i1 %10, label %then, label %else
+
+exit:                                             ; preds = %while
+  call void @"*raise<String>:NoReturn"(%String* bitcast ({ i32, i32, i32, [19 x i8] }* @str to %String*))
+  unreachable
+
+then:                                             ; preds = %body
+  %11 = load i32* %hash_size
+  ret i32 %11
+
+else:                                             ; preds = %body
+  %12 = load i32* %new_size
+  %13 = shl i32 %12, 1
+  store i32 %13, i32* %new_size
+  %14 = load i32* %i1
+  %15 = add i32 %14, 1
+  store i32 %15, i32* %i1
+  br label %while
+}
+
+declare i32 @"*Array(Int32)@Array(T)#length<Array(Int32)>:Int32"(%"Array(Int32)"*)
+
+declare i32 @"*Pointer(Int32)@Pointer(T)#[]<Pointer(Int32), Int32>:Int32"(i32*, i32)
+
+declare void @"*raise<String>:NoReturn"(%String*)
+
+declare %"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"** @"*Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?)@Pointer(T)#realloc<Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?), Int32>:Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?)"(%"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"**, i32)
+
+declare i1 @"*Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?)@Pointer(T)#[]=<Pointer(Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))?), Int32, Nil>:Nil"(%"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"**, i32, i1)
+
+declare i1 @"*Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))@Hash(K, V)::Entry(K, V)#next=<Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class)), Nil>:Nil"(%"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"*, i1)
+
+declare %"(Int:Class | Float:Class)" @"*Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))@Hash(K, V)::Entry(K, V)#key<Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))>:(Int:Class | Float:Class)"(%"Hash(K, V)::Entry((Int:Class | Float:Class), (Example::Integer:Class | Example::Float:Class))"*)
+
+attributes #0 = { nounwind }
