@@ -10,4 +10,4 @@ cd crystal-issue-500
 crystal run src/example.cr
 ```
 
-log is here from my Mac: [](log.txt) and [](log.err)
+log is here from my Mac: [stdout](log.txt) and [stderr](log.err)
